@@ -1,0 +1,274 @@
+[
+  {
+    "id": "ai-evolution-express-llm-to-agents",
+    "title": "The AI Evolution Express: From LLMs to Autonomous Agents",
+    "url": "https://x.com/pvergadia/status/2025390082996224079",
+    "type": "article",
+    "category": "AI Engineering & Education",
+    "tags": ["llm", "agents", "rag", "mental model", "foundations"],
+    "description": "Visual thread charting AI evolution as five stops on a train — from zero-shot prompting to true agent architecture with loops, memory, and tool use. Clean mental model for explaining 'why agents now?'",
+    "takeaways": [
+      "Stop 1: Simple LLM → Stop 2: Document stuffing → Stop 3: RAG + Tools → Stop 4: Multi-modal → Stop 5: True Agent Architecture",
+      "Each evolution stage builds on the previous — you can't skip to agents without understanding RAG and tools first",
+      "Use this framework to identify which 'stop' your current AI system is at before designing the next iteration",
+      "Useful for onboarding non-technical stakeholders to agentic AI concepts without jargon"
+    ],
+    "addedAt": "2026-03-10"
+  },
+  {
+    "id": "paperclip-company-run-by-agents",
+    "title": "Paperclip — How to Build a Company Run Entirely by AI Agents",
+    "url": "https://x.com/roundtablespace/status/2030595632998580328",
+    "type": "article",
+    "category": "AI Agents & Orchestration",
+    "tags": ["orchestration", "agents", "autonomy", "multi-agent", "cost control", "audit"],
+    "description": "Overview of Paperclip, an open-source tool that structures AI agents into a company hierarchy with org charts, budgets, audit logs, and heartbeat scheduling. Signals the shift from individual AI tools to full AI-run companies.",
+    "takeaways": [
+      "Paperclip solves the '20 Claude Code tabs' chaos problem — one dashboard, full coordination and traceability",
+      "Monthly budgets per agent with automatic pause at 100% spend prevent runaway API costs",
+      "Heartbeats wake agents on a schedule to check tasks and act without human babysitting",
+      "Full audit trail: every decision, tool call, and conversation is logged immutably"
+    ],
+    "addedAt": "2026-03-15"
+  },
+  {
+    "id": "claude-obsidian-memory-stack",
+    "title": "Claude + Obsidian: The Memory Stack That Compounds",
+    "url": "https://x.com/nyk_builderz/status/2030904887186514336",
+    "type": "article",
+    "category": "Claude Workflow & Skills",
+    "tags": ["obsidian", "memory", "context", "Claude", "workflow", "teams"],
+    "description": "Nyk's guide to solving Claude's context drift problem by wiring a three-tier Obsidian memory system — enabling sessions to compound instead of reset. Includes a full runbook, config files, and checklist.",
+    "takeaways": [
+      "Teams lose 30–40 minutes per Claude session re-explaining prior context — roughly a full workday per week",
+      "The real failure is not reasoning quality; it's drift — AI starts from zero each session",
+      "Three-tier memory system enables capture → structure → retrieve → compound",
+      "Skills and context files in Obsidian act as persistent memory injected at the start of each session"
+    ],
+    "addedAt": "2026-03-15"
+  },
+  {
+    "id": "akshay-pachaar-ai-engineering-hub",
+    "title": "Akshay Pachaar: AI Engineering Roadmap + Open-Source Hub",
+    "url": "https://x.com/akshay_pachaar/status/2031021906254766128",
+    "type": "article",
+    "category": "AI Engineering & Education",
+    "tags": ["roadmap", "agents", "rag", "llm", "open source", "curriculum", "skill graphs"],
+    "description": "Sr. AI Engineer at Lightning AI shares a 10K+ star GitHub hub with 90+ hands-on projects covering the full AI stack, plus a thread on Skill Graphs as a superior alternative to flat SKILL.md files.",
+    "takeaways": [
+      "Skill Graphs (hierarchical, modular skills) outperform flat SKILL.md files — Claude navigates them like a senior engineer navigates a codebase",
+      "The AI Engineering Hub covers the full production stack: LLMs + RAG + Agents + Memory + Eval + LLMOps",
+      "nanobot is an intentionally minimal personal AI assistant: ~4,000 lines, works with any LLM provider",
+      "A clean, readable codebase is a feature — not a limitation — for learning and customization"
+    ],
+    "addedAt": "2026-03-15"
+  },
+  {
+    "id": "tom-doerr-ai-project-tracker",
+    "title": "Tom Dörr: Daily Open-Source AI Project Tracker",
+    "url": "https://x.com/tom_doerr/status/2031329821372883171",
+    "type": "article",
+    "category": "Curation & Discovery",
+    "tags": ["open source", "curation", "discovery", "agents", "tools", "daily"],
+    "description": "Tom Dörr posts open-source AI projects daily, covering agent frameworks, DSPy tools, coding agents, and local LLMs. His MAGI//ARCHIVE site aggregates discovered frontier repositories.",
+    "takeaways": [
+      "Curation is a competitive advantage when open-source AI projects are released at an overwhelming daily volume",
+      "The MAGI//ARCHIVE site provides a searchable map of frontier repos updated daily",
+      "Follow as a discovery layer, not a learning resource — high signal breadth, low per-post depth by design",
+      "His own GitHub (tom-doerr) includes original tools: ZSH + Codex plugin, Vim AI completion, Ollama-OCR"
+    ],
+    "addedAt": "2026-03-15"
+  },
+  {
+    "id": "ruben-hassid-claude-cowork-setup",
+    "title": "Ruben Hassid: Claude + Cowork Personal AI Setup Guide",
+    "url": "https://x.com/rubenhassid/status/2031666815554736227",
+    "type": "article",
+    "category": "Claude Workflow & Skills",
+    "tags": ["Claude", "workflow", "context", "setup", "cowork", "productivity", "prompting"],
+    "description": "Practical guide to building a personal Claude-Work folder with three key context files — turning Claude's Cowork mode into a persistent AI operating system accessible to non-developers.",
+    "takeaways": [
+      "Three key context files: about-me.md (daily workflow), my-voice.md (tone & style), my-rules.md (task constraints)",
+      "Writing my-voice.md as a style guide prevents Claude from overriding your tone in generated content",
+      "Framing Claude as a 'brutally honest thinking partner' via a custom system prompt dramatically improves output quality",
+      "Start sessions with: 'DO NOT start yet. Ask me clarifying questions so we can align step by step.'"
+    ],
+    "addedAt": "2026-03-15"
+  },
+  {
+    "id": "vmlops-llmops-production",
+    "title": "_vmlops: MLOps / LLMOps Production Insights",
+    "url": "https://x.com/_vmlops/status/2032355826665734509",
+    "type": "article",
+    "category": "AI Engineering & Education",
+    "tags": ["llmops", "mlops", "production", "prompt versioning", "cost", "non-determinism"],
+    "description": "Account focused on LLMOps practices — covering non-determinism management, prompt versioning as software engineering, and cost control for token-heavy production systems.",
+    "takeaways": [
+      "LLMOps is a distinct discipline from traditional MLOps — non-determinism, context windows, and prompt versioning require different practices",
+      "Production LLM systems are complex orchestrations: foundation models + retrieval + guardrails + routing + feedback loops",
+      "Prompt engineering is now software engineering — prompts require versioning, testing, and CI/CD pipelines",
+      "Cost is first-class: token counting, caching strategies, and model selection directly impact product margins"
+    ],
+    "addedAt": "2026-03-20"
+  },
+  {
+    "id": "gitnexus-knowledge-graph-codebase",
+    "title": "GitNexus: A Knowledge Graph for Your Codebase",
+    "url": "https://x.com/pvergadia/status/2033403840264126816",
+    "type": "article",
+    "category": "AI Agents & Orchestration",
+    "tags": ["codebase", "agents", "blast radius", "MCP", "open source", "safety", "dependency graph"],
+    "description": "GitNexus builds a full knowledge graph of your codebase — mapping dependencies, call chains, and execution flows — so AI coding agents know what they might break before they act.",
+    "takeaways": [
+      "AI agents are the smartest coders on your team — and they have no awareness of blast radius",
+      "GitNexus provides blast radius analysis before any change, coordinated symbol renaming across 5+ files, and an auto-generated codebase wiki",
+      "Plugs into Claude Code, Cursor, and Windsurf via MCP: npx gitnexus analyze",
+      "Pre-indexing before a session starts is key — live graph queries during agent work add latency"
+    ],
+    "addedAt": "2026-03-20"
+  },
+  {
+    "id": "lessons-building-claude-code",
+    "title": "Lessons from Building Claude Code: How We Use Skills",
+    "url": "https://x.com/trq212/status/2033949937936085378",
+    "type": "article",
+    "category": "Claude Workflow & Skills",
+    "tags": ["skills system", "Claude Code", "agents", "progressive disclosure", "anthropic"],
+    "description": "In-depth thread from a core Claude Code engineer at Anthropic on how Skills actually work internally — folder-based structures with progressive disclosure, Gotchas sections, and trigger descriptions. 6M+ views.",
+    "takeaways": [
+      "A Skill is a folder, not just a text file — it can include scripts, reference code, assets, and a Gotchas section that evolves over time",
+      "Skill descriptions must be written as trigger conditions, not summaries, or Claude won't fire them at the right moment",
+      "Progressive disclosure: Claude reads skill metadata first (~100 tokens), then dives deeper only when needed",
+      "The highest-signal section in any skill is the Gotchas — built up from real failure points, not anticipated ones"
+    ],
+    "addedAt": "2026-03-20"
+  },
+  {
+    "id": "complete-ai-stack-2026",
+    "title": "The Complete AI Stack for 2026 (48 Tools)",
+    "url": "https://x.com/bharukashraddha/status/2034219375197307323",
+    "type": "article",
+    "category": "Tools & Stacks",
+    "tags": ["tools", "stack", "overview", "2026", "agents", "coding", "research"],
+    "description": "Curated thread listing 48 AI tools organized into a coherent stack for 2026, spanning chatbots, video/image generation, coding assistants, AI agents, voice tools, and research utilities.",
+    "takeaways": [
+      "A curated stack beats a random collection — grouping by function reveals gaps and redundancies in your AI workflow",
+      "The agent layer (Claude Computer Use, Operator, Manus AI) is now a distinct category alongside chatbots",
+      "Most teams underinvest in evaluation and research tools — Elicit, Consensus, and Perplexity deserve their own category",
+      "Coding assistants like Windsurf, Bolt.new, and Lovable now enable full app creation without traditional dev environments"
+    ],
+    "addedAt": "2026-03-25"
+  },
+  {
+    "id": "karpathy-llm-wiki-pattern",
+    "title": "Karpathy: LLM Wiki — A Pattern for Persistent Knowledge Bases",
+    "url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f",
+    "type": "article",
+    "category": "AI Engineering & Education",
+    "tags": ["llm", "knowledge management", "rag", "wiki", "architecture", "karpathy"],
+    "description": "Andrej Karpathy's architectural pattern for building a personal knowledge base that LLMs actively maintain — a compounding wiki rather than a search index. The foundational pattern behind persistent AI memory systems.",
+    "takeaways": [
+      "RAG retrieves knowledge anew each time; LLM Wiki compiles it once and keeps it current — it's a compounding artifact, not a search index",
+      "Three layers: raw sources (immutable), wiki (LLM writes and maintains), schema (CLAUDE.md — tells LLM how to run the wiki)",
+      "Three operations: Ingest (read + update 10-15 wiki pages), Query (answer against wiki), Lint (find contradictions, orphans, gaps)",
+      "LLM solves the core reason people abandon wikis: not reading and thinking — but bookkeeping. It can touch 15 files in one pass without fatigue"
+    ],
+    "addedAt": "2026-04-08"
+  },
+  {
+    "id": "claude-code-best-practice-reference",
+    "title": "claude-code-best-practice: The Definitive Claude Code Reference",
+    "url": "https://github.com/shanraisshan/claude-code-best-practice",
+    "type": "article",
+    "category": "Claude Workflow & Skills",
+    "tags": ["Claude Code", "best practices", "agents", "skills", "subagents", "hooks", "MCP"],
+    "description": "The most comprehensive collection of Claude Code best practices — 69 tips from Boris Cherny and the Anthropic team, covering all primitives: Subagents, Commands, Skills, Hooks, and MCP. 35K+ GitHub stars.",
+    "takeaways": [
+      "Three building blocks: Subagents (isolated context, autonomous actor), Commands (inject knowledge into current context), Skills (customizable, preloadable with progressive disclosure)",
+      "Orchestration pattern: Command → Agent → Skill — the standard architecture for complex agentic workflows",
+      "Keep CLAUDE.md under 200 lines; rules in settings.json are enforced more strictly than rules in CLAUDE.md",
+      "Context is the main resource: /compact at 50% fill, /clear on task switch, subagents for isolating intermediate work"
+    ],
+    "addedAt": "2026-04-10"
+  },
+  {
+    "id": "ai-engineering-roadmap-ronin",
+    "title": "AI Engineering Roadmap — 6-Month Learning Path",
+    "url": "https://x.com/deronin_/status/2042875513492947286",
+    "type": "article",
+    "category": "AI Engineering & Education",
+    "tags": ["roadmap", "ai engineering", "llm", "industry", "learning path"],
+    "description": "Tweet linking to a structured 6-month AI Engineering roadmap covering LLM APIs, RAG, agents, and deployment. Treat the alarmist framing critically — the value is in the practical learning path.",
+    "takeaways": [
+      "AI Engineering is not ML — it's working with ready models via API: pipelines, RAG, agents, orchestration. Closer to frontend work than classical ML",
+      "The linked March 2026 roadmap covers the full AI Engineering stack across ~6 months of structured study",
+      "Dario Amodei's automation claims are real context but the 'two types of people' framing is marketing — evaluate the roadmap on its own merits",
+      "Key competencies: LLM API usage, RAG pipeline design, agent orchestration, evaluation, and deployment"
+    ],
+    "addedAt": "2026-04-13"
+  },
+  {
+    "id": "google-engineer-80-percent-automation",
+    "title": "Google Engineer Automated 80% of His Work with Claude Code",
+    "url": "https://x.com/noisyb0y1/status/2043609541477044439",
+    "type": "article",
+    "category": "Claude Workflow & Skills",
+    "tags": ["Claude Code", "automation", "workflow", "productivity", "agents", "case study"],
+    "description": "Case study of an 11-year Google engineer who automated ~80% of his daily work with Claude Code and a custom .NET orchestrator, reducing his workday to 2–3 hours. Shows the gap between occasional and systematic AI use.",
+    "takeaways": [
+      "The automation works because of domain expertise, not AI magic — 11 years of experience enables precise task formulation and critical result review",
+      "A custom .NET orchestrator sits between the engineer and Claude Code — structure and context management is the key differentiator",
+      "This is the human-in-the-loop agent pattern: human sets goal and criteria, agent executes, human validates",
+      "The gap between 'using Claude occasionally' and 'embedding the agent into your workflow' yields a multiplicative, not marginal, productivity gain"
+    ],
+    "addedAt": "2026-04-13"
+  },
+  {
+    "id": "karpathy-inspired-claude-code-guidelines",
+    "title": "Karpathy-Inspired Claude Code Guidelines (CLAUDE.md)",
+    "url": "https://github.com/forrestchang/andrej-karpathy-skills",
+    "type": "article",
+    "category": "Claude Workflow & Skills",
+    "tags": ["Claude Code", "CLAUDE.md", "best practices", "karpathy", "prompt engineering", "simplicity"],
+    "description": "A single CLAUDE.md file distilling Karpathy's four principles for working with Claude Code — directly addressing the four core LLM failure modes in coding tasks. Copy into any project immediately.",
+    "takeaways": [
+      "Think Before Coding: if a task is ambiguous, name it explicitly and ask — don't silently pick an interpretation",
+      "Simplicity First: minimum code that solves the problem; no abstractions 'for the future' that weren't requested",
+      "Surgical Changes: only touch what directly relates to the request; every changed line must trace to a specific user ask",
+      "LLMs are exceptionally good at looping until they meet specific goals — formulate success criteria, not step-by-step instructions"
+    ],
+    "addedAt": "2026-04-13"
+  },
+  {
+    "id": "obsidian-seed-claude-thinking-partner",
+    "title": "Obsidian Seed: Claude Code as a Persistent Thinking Partner",
+    "url": "https://github.com/dkushnikov/obsidian-seed",
+    "type": "article",
+    "category": "Claude Workflow & Skills",
+    "tags": ["obsidian", "Claude Code", "memory", "context", "workflow", "productivity", "session management"],
+    "description": "Wizard-driven methodology for turning Claude Code into a context-aware thinking partner by wiring an Obsidian vault with persistent session memory. Solves the 'smart stranger' problem — every session starting from zero.",
+    "takeaways": [
+      "The model is not the bottleneck — context is. A system that loads your context at every session compounds in value over months",
+      "The stateful multiplier has five components that only work well together: CLAUDE.md, MEMORY.md, session logs, TODO with age markers, and session workflow rules",
+      "For episodic users (vault opened once a week): a 5-minute brain-dump note before any complex session prevents stale-context failures",
+      "The session close is the highest-leverage habit — skip it and compound interest breaks. Most users fail here, not at setup"
+    ],
+    "addedAt": "2026-04-13"
+  },
+  {
+    "id": "production-ai-architecture-9-layer",
+    "title": "Production AI Architecture — 9-Layer Breakdown",
+    "url": "https://x.com/technmak/status/2042951175071502513",
+    "type": "article",
+    "category": "AI Engineering & Education",
+    "tags": ["architecture", "rag", "agents", "production", "services", "semantic cache"],
+    "description": "Thread breaking down a real production AI application into 9 layers — showing what a mature RAG + agent stack looks like beyond toy examples, with concrete folder structures and component logic.",
+    "takeaways": [
+      "Production AI splits into services/ (RAG pipeline, semantic cache, memory, query rewriter, router) and agents/ (document grader, decomposer, adaptive router)",
+      "services/ is stateless utilities; agents/ is orchestrators with decision logic — this separation is the key architectural pattern",
+      "Semantic cache prevents repeated similar queries from hitting the LLM — a first-class performance and cost primitive, not an optimization",
+      "The system self-corrects: if the document grader finds insufficient relevance, the search restarts with modified parameters — this is the agentic loop in practice"
+    ],
+    "addedAt": "2026-04-13"
+  }
+]
