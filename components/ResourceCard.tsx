@@ -1,6 +1,26 @@
 import Link from "next/link";
 import type { Resource } from "@/types/resource";
 import ReadToggle from "./ReadToggle";
+import StarRating from "./StarRating";
+
+const TAG_COLORS = [
+  "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300",
+  "bg-violet-100 text-violet-700 dark:bg-violet-900/40 dark:text-violet-300",
+  "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300",
+  "bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300",
+  "bg-rose-100 text-rose-700 dark:bg-rose-900/40 dark:text-rose-300",
+  "bg-cyan-100 text-cyan-700 dark:bg-cyan-900/40 dark:text-cyan-300",
+  "bg-indigo-100 text-indigo-700 dark:bg-indigo-900/40 dark:text-indigo-300",
+  "bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-300",
+] as const;
+
+function tagColor(tag: string): string {
+  let h = 0;
+  for (let i = 0; i < tag.length; i++) {
+    h = (h * 31 + tag.charCodeAt(i)) & 0xffff;
+  }
+  return TAG_COLORS[h % TAG_COLORS.length];
+}
 
 interface ResourceCardProps {
   resource: Resource;
@@ -30,21 +50,22 @@ export default function ResourceCard({ resource }: ResourceCardProps) {
             {resource.tags.map((tag) => (
               <span
                 key={tag}
-                className="rounded-full bg-zinc-100 px-2 py-0.5 text-xs text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300"
+                className={`rounded-full px-2 py-0.5 text-xs font-medium ${tagColor(tag)}`}
               >
                 {tag}
               </span>
             ))}
           </div>
+          <div className="mt-3">
+            <StarRating resourceId={resource.id} />
+          </div>
         </div>
-        <a
-          href={resource.url}
-          target="_blank"
-          rel="noopener noreferrer"
+        <Link
+          href={`/${resource.id}`}
           className="shrink-0 rounded-lg border border-zinc-200 px-3 py-1.5 text-xs font-medium text-zinc-700 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800"
         >
           Open →
-        </a>
+        </Link>
       </div>
     </li>
   );

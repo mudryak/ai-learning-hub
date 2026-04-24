@@ -3,6 +3,26 @@ import Link from "next/link";
 import resources from "@/data/resources.json";
 import type { Resource } from "@/types/resource";
 import ReadToggle from "@/components/ReadToggle";
+import StarRating from "@/components/StarRating";
+
+const TAG_COLORS = [
+  "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300",
+  "bg-violet-100 text-violet-700 dark:bg-violet-900/40 dark:text-violet-300",
+  "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300",
+  "bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300",
+  "bg-rose-100 text-rose-700 dark:bg-rose-900/40 dark:text-rose-300",
+  "bg-cyan-100 text-cyan-700 dark:bg-cyan-900/40 dark:text-cyan-300",
+  "bg-indigo-100 text-indigo-700 dark:bg-indigo-900/40 dark:text-indigo-300",
+  "bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-300",
+] as const;
+
+function tagColor(tag: string): string {
+  let h = 0;
+  for (let i = 0; i < tag.length; i++) {
+    h = (h * 31 + tag.charCodeAt(i)) & 0xffff;
+  }
+  return TAG_COLORS[h % TAG_COLORS.length];
+}
 
 const allResources = resources as Resource[];
 
@@ -42,7 +62,7 @@ export default async function ResourcePage({
               </span>
               <ReadToggle resourceId={resource.id} />
             </div>
-            <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50 leading-snug">
+            <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50 leading-snug mt-1">
               {resource.title}
             </h1>
             <p className="mt-3 text-zinc-500 dark:text-zinc-400">
@@ -52,7 +72,7 @@ export default async function ResourcePage({
               {resource.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="rounded-full bg-zinc-100 px-2 py-0.5 text-xs text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300"
+                  className={`rounded-full px-2 py-0.5 text-xs font-medium ${tagColor(tag)}`}
                 >
                   {tag}
                 </span>
@@ -80,7 +100,7 @@ export default async function ResourcePage({
             </section>
           )}
 
-          <footer className="flex items-center gap-3">
+          <footer className="flex flex-wrap items-center gap-3">
             <a
               href={resource.url}
               target="_blank"
@@ -89,6 +109,7 @@ export default async function ResourcePage({
             >
               Open resource →
             </a>
+            <StarRating resourceId={resource.id} />
             <span className="text-xs text-zinc-400">
               Added {new Date(resource.addedAt).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
             </span>
