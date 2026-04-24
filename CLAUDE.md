@@ -1,24 +1,27 @@
-@AGENTS.md
-
-# AI Learning Hub — Project Context
+# AI Shelf — Project Context
 
 ## What this is
-A public web app for curating AI learning resources (articles, videos). No database, no auth. Content lives in `/data/resources.json`. Read state is tracked via localStorage per-browser.
+Personal web app for curating AI learning resources (articles, videos) with search, filters, read state, ratings, and dark mode. Content lives in `/data/resources.json`. Read state and ratings are tracked via localStorage per-browser.
 
 ## Stack
 - Next.js 16+ (App Router, TypeScript)
-- Tailwind CSS
+- Tailwind CSS v4
 - Fuse.js (client-side full-text search)
 - Vercel (hosting)
 
 ## Project location
 `~/Documents/pets/ai-learning-hub/`
 
+## Dev server
+```bash
+npm run dev   # uses --webpack (Turbopack incompatible with @custom-variant dark in dev)
+```
+
 ## Content model
 See `/types/resource.ts` for the `Resource` type.
-See `/data/resources.json` for current content.
+See `/data/resources.json` for current content (18 resources).
 
-Categories are fixed (defined in `ResourceCategory` type):
+Categories (fixed):
 - AI Engineering & Education
 - Claude Workflow & Skills
 - AI Agents & Orchestration
@@ -28,35 +31,46 @@ Categories are fixed (defined in `ResourceCategory` type):
 
 Types: `article` | `video`
 
-## Current state
-Check `AGENTS.md` → "Current Phase" section for where we are in the roadmap.
+## localStorage keys
+- `ai-hub-status` — `Record<string, 'unread' | 'in-progress' | 'read'>`
+- `ai-hub-ratings` — `Record<string, number>` (1–5)
+- `theme` — `'dark' | 'light'`
 
-## How to work on this project
+All storage utilities live in `lib/storage.ts`.
 
-**Always route tasks through @project-manager.** Example:
-```
-@project-manager Добавь страницу /[id] с полными takeaways и кнопкой "mark as read"
-```
-
-**To add a resource:**
-```
-@hub-content https://...
-```
-
-**Agent responsibilities** are defined in `AGENTS.md`. Before making changes:
-1. Check which agent owns the area
-2. If the change touches architecture — check `AGENTS.md` Decision Log first
-3. After completing a phase — update `AGENTS.md` Current Phase section
-
-## Key decisions (summary)
-- No DB: content in JSON, redeploy updates content
-- No auth: public read, localStorage for personal read-state
-- No AI features in MVP
+## Key decisions
+- No DB: content in JSON, redeploy on content change
+- No auth: personal-use app, localStorage for state
 - Fuse.js over server search: dataset < 500 items
 - localStorage over cookies: no 4KB limit, no request pollution
+- `next dev --webpack`: Turbopack ignores `@custom-variant dark` in dev mode
+- Sort order fixed at page load to avoid visual jumps when toggling read state
+
+## Architecture
+- `app/page.tsx` — Server Component, passes data to ResourceList
+- `app/[id]/page.tsx` — Server Component, detail page with takeaways + StarRating
+- `components/ResourceList.tsx` — Client Component: search, filters, sort, StatsBar
+- `components/ResourceCard.tsx` — card with ReadToggle + StarRating + book icon
+- `components/ReadToggle.tsx` — 3-state: unread → reading → read
+- `components/StarRating.tsx` — 1–5 stars, localStorage-persisted
+- `components/StatsBar.tsx` — read/reading/unread counts + progress bar
+- `components/ThemeToggle.tsx` — dark/light toggle, persisted to localStorage
+- `lib/storage.ts` — shared localStorage utilities + migration from old format
 
 ## Phases
-- **Phase 0** ✅ Scaffolding — done
-- **Phase 1** 🔄 Core UI — search, filters, `/[id]` page, read state
-- **Phase 2** ⬜ Content population — @hub-content agent, import from Obsidian
-- **Phase 3** ⬜ Polish + demo prep
+- **Phase 0** ✅ Scaffolding
+- **Phase 1** ✅ Core UI — search, filters, `/[id]` page, read state
+- **Phase 2** ✅ Content population — 18 resources imported from Obsidian
+- **Phase 3** ✅ Polish — dark mode, stats, 3-state read, ratings, filters, sorting, AI Shelf branding
+- **Phase 4** ⬜ Auth + Backend — see TODO
+
+## TODO
+
+### Auth
+- [ ] Gmail / Google OAuth — allow personal login to sync state across devices
+- [ ] Protect write operations behind auth
+
+### Backend
+- [ ] Replace localStorage with a real backend (Supabase or similar)
+- [ ] Persist read status, ratings, and progress server-side per user
+- [ ] Keep localStorage as offline/unauthenticated fallback
