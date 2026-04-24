@@ -3,6 +3,15 @@ import type { Resource } from "@/types/resource";
 import ReadToggle from "./ReadToggle";
 import StarRating from "./StarRating";
 
+function BookIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 shrink-0" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+      <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+    </svg>
+  );
+}
+
 const TAG_COLORS = [
   "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300",
   "bg-violet-100 text-violet-700 dark:bg-violet-900/40 dark:text-violet-300",
@@ -32,6 +41,7 @@ export default function ResourceCard({ resource }: ResourceCardProps) {
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
+            <BookIcon />
             <span className="text-xs font-medium uppercase tracking-wide text-zinc-400">
               {resource.type} · {resource.category}
             </span>

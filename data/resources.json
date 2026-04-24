@@ -270,5 +270,69 @@
       "The system self-corrects: if the document grader finds insufficient relevance, the search restarts with modified parameters — this is the agentic loop in practice"
     ],
     "addedAt": "2026-04-13"
+  },
+  {
+    "id": "mdancho84-regression-diagnostics-visual",
+    "title": "6 Diagnostic Checks for Validating Regression Models (Visual)",
+    "url": "https://x.com/mdancho84/status/2046974114091389052",
+    "type": "article",
+    "category": "AI Engineering & Education",
+    "tags": ["ml-fundamentals", "regression", "diagnostics", "visualization", "data science"],
+    "description": "Matt Dancho (@mdancho84, Business Science) shares a visual breakdown of 6 essential diagnostic checks for validating regression models — a practical reference for any data scientist or ML practitioner building predictive models.",
+    "takeaways": [
+      "Regression validation is not optional — skipping diagnostics leads to models that look good on paper but fail in production",
+      "The 6 checks cover residual analysis, linearity, homoscedasticity, normality, multicollinearity, and influential points — each targets a specific assumption the model makes",
+      "Visual diagnostics (residual plots, Q-Q plots, leverage plots) are faster to interpret than statistical tests alone and catch issues that metrics miss",
+      "Business Science's style: data science education paired with R/Python examples aimed at practitioners, not researchers"
+    ],
+    "addedAt": "2026-04-24"
+  },
+  {
+    "id": "dailydoseofds-agent-memory-3-layer",
+    "title": "The Agent Memory Trick Top AI Labs Use — 3-Layer Architecture",
+    "url": "https://x.com/dailydoseofds_/status/2046503454919864735",
+    "type": "article",
+    "category": "AI Agents & Orchestration",
+    "tags": ["agents", "memory", "rag", "knowledge graph", "embeddings", "cognee"],
+    "description": "Daily Dose of Data Science (Avi Chawla) explains why single vector-store memory fails at multi-hop reasoning and how Microsoft, Google, and Meta use a complementary 3-layer memory stack — relational + vector + graph — to build agents that reason over connected facts.",
+    "takeaways": [
+      "Storing more data in a vector DB doesn't improve reasoning — it only retrieves semantically similar facts, missing intermediate connections needed for multi-hop questions",
+      "The 3-layer stack: relational layer (provenance, timestamps, permissions) + vector layer (semantic search) + graph layer (relationship mapping) — each layer solves what the others can't",
+      "Cognee is an open-source ECL pipeline (Extract, Cognify, Load) that populates all three stores simultaneously during indexing, not post-hoc",
+      "Context windows have a 'lost in the middle' problem — accuracy drops 30%+ when relevant facts are buried deep in a long prompt; structured memory is the fix"
+    ],
+    "addedAt": "2026-04-24"
+  },
+  {
+    "id": "avichawla-claude-code-token-28x",
+    "title": "How to Cut Claude Code Token Usage 2.8x via Backend Architecture",
+    "url": "https://x.com/_avichawla/status/2046500537584218438",
+    "type": "article",
+    "category": "Claude Workflow & Skills",
+    "tags": ["Claude Code", "token optimization", "agents", "backend design", "cost", "skills"],
+    "description": "Avi Chawla demonstrates that Claude Code token consumption is primarily an architectural problem, not a model problem — and shows how three backend changes reduced a DocuRAG build from 10.4M tokens ($9.21) to 3.7M tokens ($2.81) with zero errors.",
+    "takeaways": [
+      "Better models cost more tokens when the backend is poorly structured — more capable models spend more reasoning filling knowledge gaps from ambiguous APIs",
+      "Three fixes: (1) pre-load domain patterns as Skills so Claude doesn't rediscover them via trial-and-error; (2) use structured CLI with JSON + semantic exit codes, not ambiguous error messages; (3) provide unified state inspection instead of multiple fragmented metadata calls",
+      "The 2.8x reduction came from eliminating error-retry loops, not from prompt tuning — architectural clarity is the highest-leverage optimization",
+      "Benchmark: Supabase approach = 10.4M tokens, 12 messages, 8 debugging cycles; InsForge approach = 3.7M tokens, 1 message, zero errors — same end result"
+    ],
+    "addedAt": "2026-04-24"
+  },
+  {
+    "id": "avichawla-diffusion-llms-anatomy",
+    "title": "The Anatomy of Diffusion LLMs — A Fundamentally Different Way to Generate Text",
+    "url": "https://x.com/_avichawla/status/2044670188998803855",
+    "type": "article",
+    "category": "AI Engineering & Education",
+    "tags": ["architecture", "llm", "diffusion", "inference", "ml-fundamentals", "gpu"],
+    "description": "Avi Chawla explains diffusion language models from scratch — how they generate all tokens in parallel by progressively unmasking a sequence, why this is fundamentally more GPU-efficient than left-to-right autoregressive decoding, and which emerging models already match GPT-4-class performance.",
+    "takeaways": [
+      "Every current production LLM (GPT-4, Claude, Gemini) generates one token at a time left-to-right, yielding ~1 FLOP per byte on hardware designed for 100+ FLOPs/byte — a massive hardware mismatch",
+      "Diffusion LLMs start with a fully masked sequence and unmask all tokens in parallel using bidirectional attention, shifting inference from memory-bandwidth-bound to compute-bound — matching GPU strengths",
+      "Emerging diffusion models (BD3-LM, LLaDA 8B, Dream 7B) already match or exceed autoregressive benchmarks — this is no longer a research curiosity",
+      "Understanding the math (ELBO-derived training objective, forward/reverse masking, block-level KV caching) will become a practical competency as these models enter production"
+    ],
+    "addedAt": "2026-04-24"
   }
 ]

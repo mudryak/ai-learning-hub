@@ -47,9 +47,12 @@ export default function ResourceList({ resources }: ResourceListProps) {
 
   const [statuses, setStatuses] = useState<Record<string, ReadStatus>>({});
   const [ratings, setRatings] = useState<Record<string, number>>({});
+  const [sortStatuses, setSortStatuses] = useState<Record<string, ReadStatus>>({});
 
   useEffect(() => {
-    setStatuses(getStatuses());
+    const s = getStatuses();
+    setStatuses(s);
+    setSortStatuses(s);
     setRatings(getRatings());
   }, []);
 
@@ -101,13 +104,13 @@ export default function ResourceList({ resources }: ResourceListProps) {
 
     const ORDER: Record<string, number> = { "in-progress": 0, unread: 1, read: 2 };
     items = [...items].sort((a, b) => {
-      const sa = ORDER[statuses[a.id] ?? "unread"];
-      const sb = ORDER[statuses[b.id] ?? "unread"];
+      const sa = ORDER[sortStatuses[a.id] ?? "unread"];
+      const sb = ORDER[sortStatuses[b.id] ?? "unread"];
       return sa - sb;
     });
 
     return items;
-  }, [query, selectedCategory, selectedType, selectedStatus, minRating, fuse, resources, statuses, ratings]);
+  }, [query, selectedCategory, selectedType, selectedStatus, minRating, fuse, resources, statuses, ratings, sortStatuses]);
 
   function clearFilters() {
     setQuery("");

@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AI Learning Hub",
-  description: "Curated AI learning resources — articles, videos, and key takeaways",
+  title: "AI Shelf",
+  description: "Personal AI reading shelf — articles, videos, and key takeaways",
 };
 
 export default function RootLayout({
