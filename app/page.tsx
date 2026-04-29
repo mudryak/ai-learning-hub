@@ -1,19 +1,48 @@
-import resources from "@/data/resources.json";
+import { createClient } from "@/lib/supabase/server";
 import type { Resource } from "@/types/resource";
 import ResourceList from "@/components/ResourceList";
 import ThemeToggle from "@/components/ThemeToggle";
+import UserMenu from "@/components/UserMenu";
 
 function BookIcon() {
   return (
-    <svg viewBox="0 0 24 24" className="h-8 w-8 shrink-0" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      viewBox="0 0 24 24"
+      className="h-8 w-8 shrink-0"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.75}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
       <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
       <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
     </svg>
   );
 }
 
-export default function Home() {
-  const data = resources as Resource[];
+function mapResource(row: Record<string, unknown>): Resource {
+  return {
+    id: row.id as string,
+    title: row.title as string,
+    url: row.url as string,
+    type: row.type as Resource["type"],
+    category: row.category as Resource["category"],
+    tags: row.tags as string[],
+    description: row.description as string,
+    takeaways: row.takeaways as string[],
+    addedAt: row.added_at as string,
+  };
+}
+
+export default async function Home() {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("resources")
+    .select("*")
+    .order("added_at", { ascending: false });
+
+  const resources: Resource[] = (data ?? []).map(mapResource);
 
   return (
     <main className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
@@ -25,12 +54,15 @@ export default function Home() {
               AI Shelf
             </h1>
             <p className="mt-2 text-zinc-500 dark:text-zinc-400">
-              {data.length} books
+              {resources.length} books
             </p>
           </div>
-          <ThemeToggle />
+          <div className="flex items-center gap-3">
+            <UserMenu />
+            <ThemeToggle />
+          </div>
         </header>
-        <ResourceList resources={data} />
+        <ResourceList resources={resources} />
       </div>
     </main>
   );

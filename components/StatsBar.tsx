@@ -1,24 +1,22 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { getStatuses } from "@/lib/storage";
+import { useApp } from "./AppContext";
 
 interface StatsBarProps {
   total: number;
 }
 
 export default function StatsBar({ total }: StatsBarProps) {
-  const [read, setRead] = useState(0);
-  const [inProgress, setInProgress] = useState(0);
+  const { progress, progressLoaded } = useApp();
 
-  useEffect(() => {
-    const statuses = getStatuses();
-    const vals = Object.values(statuses);
-    setRead(vals.filter((s) => s === "read").length);
-    setInProgress(vals.filter((s) => s === "in-progress").length);
-  }, []);
-
+  const vals = Object.values(progress);
+  const read = vals.filter((p) => p.status === "read").length;
+  const inProgress = vals.filter((p) => p.status === "in-progress").length;
   const unread = total - read - inProgress;
+
+  if (!progressLoaded) {
+    return <div className="h-4 animate-pulse rounded bg-zinc-100 dark:bg-zinc-800 w-48" />;
+  }
 
   return (
     <div className="flex flex-wrap items-center gap-3 text-xs text-zinc-500 dark:text-zinc-400">

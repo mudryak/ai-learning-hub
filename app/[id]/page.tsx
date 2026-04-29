@@ -1,18 +1,9 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import resources from "@/data/resources.json";
+import { createClient } from "@/lib/supabase/server";
 import type { Resource } from "@/types/resource";
 import ReadToggle from "@/components/ReadToggle";
 import StarRating from "@/components/StarRating";
-
-function BookIcon() {
-  return (
-    <svg viewBox="0 0 24 24" className="h-4 w-4 shrink-0 text-zinc-400" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-      <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
-      <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
-    </svg>
-  );
-}
 
 const TAG_COLORS = [
   "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300",
@@ -33,10 +24,35 @@ function tagColor(tag: string): string {
   return TAG_COLORS[h % TAG_COLORS.length];
 }
 
-const allResources = resources as Resource[];
+function BookIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className="h-4 w-4 shrink-0 text-zinc-400"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+      <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+    </svg>
+  );
+}
 
-export function generateStaticParams() {
-  return allResources.map((r) => ({ id: r.id }));
+function mapResource(row: Record<string, unknown>): Resource {
+  return {
+    id: row.id as string,
+    title: row.title as string,
+    url: row.url as string,
+    type: row.type as Resource["type"],
+    category: row.category as Resource["category"],
+    tags: row.tags as string[],
+    description: row.description as string,
+    takeaways: row.takeaways as string[],
+    addedAt: row.added_at as string,
+  };
 }
 
 export default async function ResourcePage({
@@ -45,11 +61,16 @@ export default async function ResourcePage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const resource = allResources.find((r) => r.id === id);
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("resources")
+    .select("*")
+    .eq("id", id)
+    .single();
 
-  if (!resource) {
-    notFound();
-  }
+  if (!data) notFound();
+
+  const resource = mapResource(data as Record<string, unknown>);
 
   return (
     <main className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
@@ -98,12 +119,8 @@ export default async function ResourcePage({
               <ul className="flex flex-col gap-2">
                 {resource.takeaways.map((takeaway, i) => (
                   <li key={i} className="flex gap-3">
-                    <span className="mt-0.5 shrink-0 text-zinc-300 dark:text-zinc-600">
-                      →
-                    </span>
-                    <span className="text-sm text-zinc-700 dark:text-zinc-300">
-                      {takeaway}
-                    </span>
+                    <span className="mt-0.5 shrink-0 text-zinc-300 dark:text-zinc-600">→</span>
+                    <span className="text-sm text-zinc-700 dark:text-zinc-300">{takeaway}</span>
                   </li>
                 ))}
               </ul>
@@ -121,7 +138,12 @@ export default async function ResourcePage({
             </a>
             <StarRating resourceId={resource.id} />
             <span className="text-xs text-zinc-400">
-              Added {new Date(resource.addedAt).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
+              Added{" "}
+              {new Date(resource.addedAt).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
             </span>
           </footer>
         </article>

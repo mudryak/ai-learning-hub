@@ -3,7 +3,9 @@
 import { useState, useMemo, useEffect } from "react";
 import Fuse from "fuse.js";
 import type { Resource, ResourceCategory, ResourceType } from "@/types/resource";
-import { getStatuses, getRatings, type ReadStatus } from "@/lib/storage";
+import type { ReadStatus } from "@/lib/storage";
+import type { ProgressEntry } from "./AppContext";
+import { useApp } from "./AppContext";
 import ResourceCard from "./ResourceCard";
 import StatsBar from "./StatsBar";
 
@@ -34,45 +36,30 @@ const MIN_RATING_OPTIONS = [
   { value: 5, label: "★ 5" },
 ];
 
+const ORDER: Record<string, number> = { "in-progress": 0, unread: 1, read: 2 };
+
 interface ResourceListProps {
   resources: Resource[];
 }
 
 export default function ResourceList({ resources }: ResourceListProps) {
+  const { progress, progressLoaded } = useApp();
   const [query, setQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<ResourceCategory | "">("");
   const [selectedType, setSelectedType] = useState<ResourceType | "">("");
   const [selectedStatus, setSelectedStatus] = useState<ReadStatus | "">("");
   const [minRating, setMinRating] = useState(0);
 
-  const [statuses, setStatuses] = useState<Record<string, ReadStatus>>({});
-  const [ratings, setRatings] = useState<Record<string, number>>({});
-  const [sortStatuses, setSortStatuses] = useState<Record<string, ReadStatus>>({});
+  // Snapshot sort order once after progress loads
+  const [sortProgress, setSortProgress] = useState<Record<string, ProgressEntry>>({});
+  const [sortSet, setSortSet] = useState(false);
 
   useEffect(() => {
-    const s = getStatuses();
-    setStatuses(s);
-    setSortStatuses(s);
-    setRatings(getRatings());
-  }, []);
-
-  // Re-read storage after any card interaction (ReadToggle / StarRating dispatch custom event)
-  useEffect(() => {
-    function onStorage() {
-      setStatuses(getStatuses());
-      setRatings(getRatings());
+    if (progressLoaded && !sortSet) {
+      setSortProgress(progress);
+      setSortSet(true);
     }
-    window.addEventListener("storage", onStorage);
-    // polling fallback for same-tab updates
-    const id = setInterval(() => {
-      setStatuses(getStatuses());
-      setRatings(getRatings());
-    }, 500);
-    return () => {
-      window.removeEventListener("storage", onStorage);
-      clearInterval(id);
-    };
-  }, []);
+  }, [progressLoaded, progress, sortSet]);
 
   const fuse = useMemo(
     () =>
@@ -96,21 +83,22 @@ export default function ResourceList({ resources }: ResourceListProps) {
       items = items.filter((r) => r.type === selectedType);
     }
     if (selectedStatus) {
-      items = items.filter((r) => (statuses[r.id] ?? "unread") === selectedStatus);
+      items = items.filter(
+        (r) => (progress[r.id]?.status ?? "unread") === selectedStatus
+      );
     }
     if (minRating > 0) {
-      items = items.filter((r) => (ratings[r.id] ?? 0) >= minRating);
+      items = items.filter((r) => (progress[r.id]?.rating ?? 0) >= minRating);
     }
 
-    const ORDER: Record<string, number> = { "in-progress": 0, unread: 1, read: 2 };
     items = [...items].sort((a, b) => {
-      const sa = ORDER[sortStatuses[a.id] ?? "unread"];
-      const sb = ORDER[sortStatuses[b.id] ?? "unread"];
+      const sa = ORDER[sortProgress[a.id]?.status ?? "unread"];
+      const sb = ORDER[sortProgress[b.id]?.status ?? "unread"];
       return sa - sb;
     });
 
     return items;
-  }, [query, selectedCategory, selectedType, selectedStatus, minRating, fuse, resources, statuses, ratings, sortStatuses]);
+  }, [query, selectedCategory, selectedType, selectedStatus, minRating, fuse, resources, progress, sortProgress]);
 
   function clearFilters() {
     setQuery("");
@@ -143,9 +131,7 @@ export default function ResourceList({ resources }: ResourceListProps) {
         >
           <option value="">All categories</option>
           {CATEGORIES.map((cat) => (
-            <option key={cat} value={cat}>
-              {cat}
-            </option>
+            <option key={cat} value={cat}>{cat}</option>
           ))}
         </select>
         <select
@@ -155,9 +141,7 @@ export default function ResourceList({ resources }: ResourceListProps) {
         >
           <option value="">All types</option>
           {TYPES.map((t) => (
-            <option key={t} value={t}>
-              {t.charAt(0).toUpperCase() + t.slice(1)}
-            </option>
+            <option key={t} value={t}>{t.charAt(0).toUpperCase() + t.slice(1)}</option>
           ))}
         </select>
         <select
@@ -166,9 +150,7 @@ export default function ResourceList({ resources }: ResourceListProps) {
           className="rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-700 focus:border-zinc-400 focus:outline-none dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 dark:focus:border-zinc-500"
         >
           {STATUS_OPTIONS.map((opt) => (
-            <option key={opt.value} value={opt.value}>
-              {opt.label}
-            </option>
+            <option key={opt.value} value={opt.value}>{opt.label}</option>
           ))}
         </select>
         <select
@@ -177,9 +159,7 @@ export default function ResourceList({ resources }: ResourceListProps) {
           className="rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-700 focus:border-zinc-400 focus:outline-none dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 dark:focus:border-zinc-500"
         >
           {MIN_RATING_OPTIONS.map((opt) => (
-            <option key={opt.value} value={opt.value}>
-              {opt.label}
-            </option>
+            <option key={opt.value} value={opt.value}>{opt.label}</option>
           ))}
         </select>
         {hasActiveFilters && (
