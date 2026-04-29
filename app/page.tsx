@@ -34,6 +34,7 @@ function mapResource(row: Record<string, unknown>): Resource {
     description: row.description as string,
     takeaways: row.takeaways as string[],
     addedAt: row.added_at as string,
+    badge: (row.badge as string | null) ?? null,
   };
 }
 

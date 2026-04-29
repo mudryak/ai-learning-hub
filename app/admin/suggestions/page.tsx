@@ -51,13 +51,10 @@ export default async function AdminSuggestionsPage() {
   return (
     <main className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
       <div className="max-w-4xl mx-auto px-4 py-12">
-        <nav className="mb-8">
-          <Link
-            href="/"
-            className="text-sm text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200"
-          >
-            ← Back to all resources
-          </Link>
+        <nav className="mb-8 flex gap-4 text-sm text-zinc-500 dark:text-zinc-400">
+          <Link href="/" className="hover:text-zinc-700 dark:hover:text-zinc-200">← Home</Link>
+          <span className="font-medium text-zinc-900 dark:text-zinc-50">Suggestions</span>
+          <Link href="/admin/resources" className="hover:text-zinc-700 dark:hover:text-zinc-200">Resources</Link>
         </nav>
 
         <header className="mb-8">

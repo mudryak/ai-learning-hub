@@ -53,6 +53,7 @@ function mapResource(row: Record<string, unknown>): Resource {
     description: row.description as string,
     takeaways: row.takeaways as string[],
     addedAt: row.added_at as string,
+    badge: (row.badge as string | null) ?? null,
   };
 }
 
@@ -92,6 +93,11 @@ export default async function ResourcePage({
               <span className="text-xs font-medium uppercase tracking-wide text-zinc-400">
                 {resource.type} · {resource.category}
               </span>
+              {resource.badge && (
+                <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 px-2 py-0.5 text-xs font-semibold text-amber-700 dark:bg-amber-900/40 dark:text-amber-400">
+                  ★ {resource.badge}
+                </span>
+              )}
               <ReadToggle resourceId={resource.id} />
             </div>
             <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50 leading-snug mt-1">

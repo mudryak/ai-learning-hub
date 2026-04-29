@@ -45,6 +45,11 @@ export default function ResourceCard({ resource }: ResourceCardProps) {
             <span className="text-xs font-medium uppercase tracking-wide text-zinc-400">
               {resource.type} · {resource.category}
             </span>
+            {resource.badge && (
+              <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 px-2 py-0.5 text-xs font-semibold text-amber-700 dark:bg-amber-900/40 dark:text-amber-400">
+                ★ {resource.badge}
+              </span>
+            )}
             <ReadToggle resourceId={resource.id} />
           </div>
           <Link

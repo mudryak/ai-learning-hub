@@ -18,4 +18,13 @@ export interface Resource {
   description: string;
   takeaways: string[];
   addedAt: string;
+  badge?: string | null;
 }
+
+export const BADGE_OPTIONS = [
+  "Must Read",
+  "Essential",
+  "Editor's Pick",
+  "Deep Dive",
+  "Quick Read",
+] as const;
