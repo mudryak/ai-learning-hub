@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useApp } from "./AppContext";
 
-export default function UserMenu() {
+export default function UserMenu({ isAdmin = false }: { isAdmin?: boolean }) {
   const { user, signOut } = useApp();
 
   if (!user) {
@@ -26,6 +26,20 @@ export default function UserMenu() {
           alt={user.user_metadata.full_name ?? "User"}
           className="h-7 w-7 rounded-full"
         />
+      )}
+      <Link
+        href="/notes"
+        className="text-xs text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200"
+      >
+        My notes
+      </Link>
+      {isAdmin && (
+        <Link
+          href="/admin/suggestions"
+          className="text-xs text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200"
+        >
+          Admin
+        </Link>
       )}
       <button
         onClick={signOut}

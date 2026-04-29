@@ -1,8 +1,10 @@
 import { createClient } from "@/lib/supabase/server";
+import { isAdmin } from "@/lib/admin";
 import type { Resource } from "@/types/resource";
 import ResourceList from "@/components/ResourceList";
 import ThemeToggle from "@/components/ThemeToggle";
 import UserMenu from "@/components/UserMenu";
+import SuggestButton from "@/components/SuggestButton";
 
 function BookIcon() {
   return (
@@ -37,10 +39,10 @@ function mapResource(row: Record<string, unknown>): Resource {
 
 export default async function Home() {
   const supabase = await createClient();
-  const { data } = await supabase
-    .from("resources")
-    .select("*")
-    .order("added_at", { ascending: false });
+  const [{ data }, { data: { user } }] = await Promise.all([
+    supabase.from("resources").select("*").order("added_at", { ascending: false }),
+    supabase.auth.getUser(),
+  ]);
 
   const resources: Resource[] = (data ?? []).map(mapResource);
 
@@ -58,7 +60,8 @@ export default async function Home() {
             </p>
           </div>
           <div className="flex items-center gap-3">
-            <UserMenu />
+            <SuggestButton />
+            <UserMenu isAdmin={isAdmin(user?.email)} />
             <ThemeToggle />
           </div>
         </header>

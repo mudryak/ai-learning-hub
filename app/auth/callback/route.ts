@@ -4,7 +4,15 @@ import { NextResponse } from "next/server";
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get("code");
-  const next = searchParams.get("next") ?? "/";
+  const nextParam = searchParams.get("next") ?? "/";
+
+  // Guard against open-redirect: only allow same-origin relative paths.
+  // A valid relative path starts with "/" but NOT "//" (which browsers treat
+  // as protocol-relative, allowing redirect to an external host).
+  const next =
+    nextParam.startsWith("/") && !nextParam.startsWith("//")
+      ? nextParam
+      : "/";
 
   if (code) {
     const supabase = await createClient();

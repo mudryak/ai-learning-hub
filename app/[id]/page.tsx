@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import type { Resource } from "@/types/resource";
 import ReadToggle from "@/components/ReadToggle";
 import StarRating from "@/components/StarRating";
+import ResourceNotes from "@/components/ResourceNotes";
 
 const TAG_COLORS = [
   "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300",
@@ -146,6 +147,8 @@ export default async function ResourcePage({
               })}
             </span>
           </footer>
+
+          <ResourceNotes resourceId={resource.id} />
         </article>
       </div>
     </main>

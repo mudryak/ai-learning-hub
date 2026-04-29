@@ -72,3 +72,63 @@ insert into resources (id, title, url, type, category, tags, description, takeaw
   ('avichawla-diffusion-llms-anatomy', 'The Anatomy of Diffusion LLMs — A Fundamentally Different Way to Generate Text', 'https://x.com/_avichawla/status/2044670188998803855', 'article', 'AI Engineering & Education', '["architecture","llm","diffusion","inference","ml-fundamentals","gpu"]'::jsonb, 'Avi Chawla explains diffusion language models from scratch — how they generate all tokens in parallel by progressively unmasking a sequence, why this is fundamentally more GPU-efficient than left-to-right autoregressive decoding, and which emerging models already match GPT-4-class performance.', '["Every current production LLM (GPT-4, Claude, Gemini) generates one token at a time left-to-right, yielding ~1 FLOP per byte on hardware designed for 100+ FLOPs/byte — a massive hardware mismatch","Diffusion LLMs start with a fully masked sequence and unmask all tokens in parallel using bidirectional attention, shifting inference from memory-bandwidth-bound to compute-bound — matching GPU strengths","Emerging diffusion models (BD3-LM, LLaDA 8B, Dream 7B) already match or exceed autoregressive benchmarks — this is no longer a research curiosity","Understanding the math (ELBO-derived training objective, forward/reverse masking, block-level KV caching) will become a practical competency as these models enter production"]'::jsonb, '2026-04-24'),
   ('dkushnikov-claude-code-mcp-plugin', 'Building a Claude Code Plugin with MCP Server — Real-World Example', 'https://github.com/dkushnikov/plaud-pipeline', 'article', 'Claude Workflow & Skills', '["mcp","claude-code","python","tools","agents","fastmcp"]'::jsonb, 'Case study: an engineer built and published a Claude Code plugin with an MCP server in a single session, wrapping a third-party voice recorder API. Shows the real workflow, stack, and patterns — useful as a template for any similar project.', '["MCP server on FastMCP (Python) + stdio transport = ~200 lines of code for 7 tools. No HTTP server needed — Claude Code launches the process itself on session start","One plugin replaced ~500 lines of scattered bash/Python scripts — a dramatic complexity reduction","Business logic for classification is in a YAML config: no hardcoded rules, easy to change behavior without touching code","Multi-model review council (3 frontier models review the design before implementation) caught a frontmatter parsing bug and a name collision before they became problems","The pattern ''MCP server as a wrapper over any API'' can be reproduced in a few hours and integrates natively into Claude"]'::jsonb, '2026-04-09')
 on conflict (id) do nothing;
+
+-- ============================================================
+-- 5. Notes table (per-user notes on resources)
+-- ============================================================
+create table if not exists notes (
+  id          uuid primary key default gen_random_uuid(),
+  user_id     uuid references auth.users(id) on delete cascade not null,
+  resource_id text references resources(id) on delete cascade not null,
+  content     text not null default '',
+  updated_at  timestamptz default now(),
+  unique (user_id, resource_id)
+);
+
+alter table notes enable row level security;
+
+create policy "notes_select" on notes
+  for select using (auth.uid() = user_id);
+
+create policy "notes_insert" on notes
+  for insert with check (auth.uid() = user_id);
+
+create policy "notes_update" on notes
+  for update using (auth.uid() = user_id);
+
+create policy "notes_delete" on notes
+  for delete using (auth.uid() = user_id);
+
+-- ============================================================
+-- 6. Suggestions table (user-submitted resource suggestions)
+-- ============================================================
+create table if not exists suggestions (
+  id          uuid primary key default gen_random_uuid(),
+  user_id     uuid references auth.users(id) on delete cascade not null,
+  title       text not null,
+  url         text not null,
+  description text not null default '',
+  category    text not null check (category in (
+                'AI Engineering & Education',
+                'Claude Workflow & Skills',
+                'AI Agents & Orchestration',
+                'Curation & Discovery',
+                'Tools & Stacks',
+                'Other'
+              )),
+  type        text not null check (type in ('article', 'video')),
+  status      text not null default 'pending' check (status in ('pending', 'approved', 'rejected')),
+  created_at  timestamptz default now()
+);
+
+alter table suggestions enable row level security;
+
+-- Users can insert their own suggestions
+create policy "suggestions_insert" on suggestions
+  for insert with check (auth.uid() = user_id);
+
+-- Users can read their own suggestions
+create policy "suggestions_select_own" on suggestions
+  for select using (auth.uid() = user_id);
+
+-- Admin operations (approve/reject) bypass RLS via service_role key used server-side
